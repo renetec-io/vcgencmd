@@ -192,11 +192,15 @@ class Vcgencmd:
 		out = self.__verify_command("dispmanx_list ", "", [""])
 		out = out.strip()
 		out = re.sub("(?<=\d)\s(?=\d)", " resolution:", out)
-		out = out.split(" ")
-		response = {}
-		for i in out:
-			j = i.split(":")
-			response[j[0].strip()] = j[1].strip()
+		out = out.split("\n")
+		response = []
+		for line in out:
+			line_out = line.strip().split(" ")
+			line_response = {}
+			for i in line_out:
+				j = i.split(":")
+				line_response[j[0].strip()] = j[1].strip()
+			response.append(line_response)
 		return response
 
 	def display_power_on(self, display):
